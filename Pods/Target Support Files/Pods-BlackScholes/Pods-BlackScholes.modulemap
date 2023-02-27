@@ -1,0 +1,6 @@
+framework module Pods_BlackScholes {
+  umbrella header "Pods-BlackScholes-umbrella.h"
+
+  export *
+  module * { export * }
+}
