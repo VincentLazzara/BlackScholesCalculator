@@ -132,6 +132,18 @@ class SearchViewController: UITableViewController, UIAnimateable {
         return SearchResults?.items.count ?? 0
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.tableView.deselectRow(at: indexPath, animated: true)
+        
+        self.performSegue(withIdentifier: "showCalculator", sender: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showCalculator"{
+            let destination = segue.destination as? CalculateViewController
+        }
+    }
+    
     
 
 }
