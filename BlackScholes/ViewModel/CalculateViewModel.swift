@@ -166,7 +166,7 @@ public class CalculateViewModel{
         button.widthAnchor.constraint(equalToConstant: 100).isActive = true
         button.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner]
         button.titleLabel?.font =  UIFont(name: "AvenirNext-Medium", size: 18)
-        button.backgroundColor = .lightGray
+        button.backgroundColor = UIColor.optionGray
         button.isUserInteractionEnabled = true
         button.setTitleColor(.white, for: .normal)
         return button

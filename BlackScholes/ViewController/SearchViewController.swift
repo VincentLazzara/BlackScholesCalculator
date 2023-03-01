@@ -7,17 +7,10 @@
 //FONTS:
 /* family: Avenir Next
  font: AvenirNext-Regular
- font: AvenirNext-Italic
- font: AvenirNext-UltraLight
- font: AvenirNext-UltraLightItalic
  font: AvenirNext-Medium
- font: AvenirNext-MediumItalic
  font: AvenirNext-DemiBold
- font: AvenirNext-DemiBoldItalic
  font: AvenirNext-Bold
- font: AvenirNext-BoldItalic
- font: AvenirNext-Heavy
- font: AvenirNext-HeavyItalic*/
+ font: AvenirNext-Heavy*/
 
 import UIKit
 import Combine
@@ -72,7 +65,7 @@ class SearchViewController: UITableViewController, UIAnimateable {
     
     func configure(){
         navigationItem.searchController = searchController
-        
+        searchController.delegate = self
         tableView.register(StockCell.self, forCellReuseIdentifier: reuseIdentifier)
         navigationItem.title = "Search"
         
@@ -81,7 +74,6 @@ class SearchViewController: UITableViewController, UIAnimateable {
   
     
     func observeForm(){
-        
         $searchQuery
             .debounce(for: .milliseconds(750), scheduler: RunLoop.main)
             .sink { [unowned self] (searchQuery) in
@@ -108,8 +100,7 @@ class SearchViewController: UITableViewController, UIAnimateable {
             switch mode{
             case .onboarding:
                 self.tableView.backgroundView = SearchPlaceholderView()
-                self.SearchResults?.items.removeAll()
-                self.tableView.reloadData()
+                self.clearTableView()
             case .search: self.tableView.backgroundView = nil
             }
         }.store(in: &self.subscribers)
@@ -183,6 +174,10 @@ class SearchViewController: UITableViewController, UIAnimateable {
 extension SearchViewController: UISearchResultsUpdating, UISearchControllerDelegate{
     func updateSearchResults(for searchController: UISearchController) {
         
+        if !searchController.isActive {
+                clearTableView()
+            }
+        
         guard let searchQuery = searchController.searchBar.text, !searchQuery.isEmpty else {return}
         
         self.searchQuery = searchQuery
@@ -194,9 +189,14 @@ extension SearchViewController: UISearchResultsUpdating, UISearchControllerDeleg
     }
     
     func didDismissSearchController(_ searchController: UISearchController) {
+        clearTableView()
+        mode = .onboarding
+    }
+
+    
+    func clearTableView(){
         self.SearchResults?.items.removeAll()
         self.tableView.reloadData()
-        mode = .onboarding
     }
    
 }

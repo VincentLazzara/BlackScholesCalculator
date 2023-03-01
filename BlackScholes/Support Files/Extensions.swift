@@ -91,25 +91,9 @@ extension UIColor {
         return UIColor(red: red/255, green: green/255, blue: blue/255, alpha: 1)
     }
     
-    static let twitterBlue = UIColor.rgb(red: 29, green: 161, blue: 242)
-
-    static let searchBackgroundColor = UIColor.rgb(red: 245, green: 245, blue: 245)
+    static let optionGray = UIColor(hue: 0, saturation: 0, brightness: 0.83, alpha: 1.0) /* #d3d3d3 */
    
 }
-
-
-extension UIViewController {
-func transitionVc(vc: UIViewController, duration: CFTimeInterval, type: CATransitionSubtype) {
-    let customVcTransition = vc
-    let transition = CATransition()
-    transition.duration = duration
-    transition.type = CATransitionType.push
-    transition.subtype = type
-    transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
-    vc.modalPresentationStyle = .fullScreen
-    view.window!.layer.add(transition, forKey: kCATransition)
-    present(customVcTransition, animated: false, completion: nil)
-}}
 
 
 extension UIApplication {
@@ -122,57 +106,6 @@ extension UIApplication {
     }
 }
 
-
-extension UIButton {
-    
-    func pulsateTest() {
-    let pulse = CASpringAnimation(keyPath: "transform.scale")
-    pulse.duration = 0.2
-    pulse.fromValue = 0.98
-    pulse.toValue = 1.25
-    pulse.autoreverses = true
-    pulse.repeatCount = 1
-    pulse.initialVelocity = 0.7
-    pulse.damping = 1.0
-    layer.add(pulse, forKey: nil)
-    }
-    
-    func flash() {
-    let flash = CABasicAnimation(keyPath: "opacity")
-    flash.duration = 0.3
-    flash.fromValue = 1
-    flash.toValue = 0.1
-    flash.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
-    flash.autoreverses = true
-    flash.repeatCount = 2
-    layer.add(flash, forKey: nil)
-    }
-    
-}
-
-
-enum ValueType: Int {
-    case none
-    case onlyLetters
-    case onlyNumbers
-    case phoneNumber   // Allowed "+0123456789"
-    case alphaNumeric
-    case fullName       // Allowed letters and space
-}
-
-
-
-struct ProgressDialog {
-    static var alert = UIAlertController()
-    static var progressView = UIProgressView()
-    static var progressPoint : Float = 0{
-        didSet{
-            if(progressPoint == 1){
-                ProgressDialog.alert.dismiss(animated: true, completion: nil)
-            }
-        }
-    }
-}
 
 extension String {
     var digits: String {

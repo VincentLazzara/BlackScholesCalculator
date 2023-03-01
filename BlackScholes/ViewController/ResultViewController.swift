@@ -10,9 +10,6 @@ import UIKit
 
 class ResultViewController: UIViewController{
     
-    
-    var isCallString = "Call"
-    
     var schole: Scholes?{
         didSet{
             configureSchole()
@@ -88,8 +85,17 @@ class ResultViewController: UIViewController{
     
     func configureSchole(){
         let optionPrice = blackScholesOptionPrice(schole: schole!)
+        
+        var isCallString: String?
+        
+        if schole?.isCall == true{
+            isCallString = "Call"
+        } else {
+            isCallString = "Put"
+        }
+        
         priceLabel.text = "$\(Double((round(optionPrice * 100)) / 100))"
-        titleLabel.text = "\(schole?.ticker ?? "GME") \(isCallString):"
+        titleLabel.text = "\(schole?.ticker ?? "GME") \(isCallString ?? "Call"):"
         
     }
     

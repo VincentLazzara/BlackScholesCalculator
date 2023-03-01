@@ -145,7 +145,7 @@ class CalculateViewController: UIViewController{
         isCall = true
         UIView.animate(withDuration: 0.1, animations: {
             self.callButton.backgroundColor = highlightedColor.darker(by: 15)
-            self.putButton.backgroundColor = .lightGray
+            self.putButton.backgroundColor = UIColor.optionGray
            }) { _ in
                UIView.animate(withDuration: 0.1, animations: {
                    self.callButton.backgroundColor = highlightedColor
@@ -157,7 +157,7 @@ class CalculateViewController: UIViewController{
         isCall = false
         
         UIView.animate(withDuration: 0.1, animations: {
-            self.callButton.backgroundColor = .lightGray
+            self.callButton.backgroundColor = UIColor.optionGray
             self.putButton.backgroundColor = highlightedColor.darker(by: 15)
            }) { _ in
                UIView.animate(withDuration: 0.1, animations: {
@@ -190,11 +190,6 @@ class CalculateViewController: UIViewController{
             
             let nav = ResultViewController()
             nav.schole = schole
-            if isCall{
-                nav.isCallString = "Call"
-            } else {
-                nav.isCallString = "Put"
-            }
             self.present(nav, animated: true)
             
         } else {
