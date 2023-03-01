@@ -76,7 +76,6 @@ class SearchViewController: UITableViewController, UIAnimateable {
         tableView.register(StockCell.self, forCellReuseIdentifier: reuseIdentifier)
         navigationItem.title = "Search"
         
-        
     }
     
   

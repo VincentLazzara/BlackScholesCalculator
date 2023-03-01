@@ -23,9 +23,11 @@ public class CalculateViewModel{
     
     let termFormatter: NumberFormatter = {
         let f = NumberFormatter()
-        f.maximumFractionDigits = 0
+        f.maximumFractionDigits = 2
+        f.minimumFractionDigits = 2
+        f.minimumIntegerDigits = 1
         f.maximumIntegerDigits = 2
-        f.numberStyle = .none
+        f.numberStyle = .decimal
         f.locale = Locale(identifier: "en-US_POSIX")
         return f
     }()
@@ -42,7 +44,7 @@ public class CalculateViewModel{
     
     
     let volitilityInput: MDCOutlinedTextField = {
-        let tf = MDCOutlinedTextField(frame: CGRect(x: 0, y: 0, width: 200, height: 20))
+        let tf = MDCOutlinedTextField(frame: CGRect(x: 0, y: 0, width: 150, height: 20))
         tf.placeholder = "%"
         tf.translatesAutoresizingMaskIntoConstraints = false
         tf.label.text = "Volatility %"
@@ -60,7 +62,7 @@ public class CalculateViewModel{
     }()
     
    let termInput: MDCOutlinedTextField = {
-        let tf = MDCOutlinedTextField(frame: CGRect(x: 0, y: 0, width: 200, height: 20))
+        let tf = MDCOutlinedTextField(frame: CGRect(x: 0, y: 0, width: 150, height: 20))
         tf.placeholder = "Years"
         tf.translatesAutoresizingMaskIntoConstraints = false
         tf.label.text = "Term (Years)"
@@ -69,7 +71,7 @@ public class CalculateViewModel{
         tf.setOutlineColor(highlightedColor, for: .editing)
         tf.sizeToFit()
         tf.doneAccessory = true
-        tf.keyboardType = .asciiCapableNumberPad
+       tf.keyboardType = .asciiCapableNumberPad
         tf.addDoneButtonOnKeyboard()
         tf.preferredContainerHeight = 20
         tf.verticalDensity = 2
@@ -78,7 +80,7 @@ public class CalculateViewModel{
     }()
     
     let strikeInput: MDCOutlinedTextField = {
-        let tf = MDCOutlinedTextField(frame: CGRect(x: 0, y: 0, width: 200, height: 20))
+        let tf = MDCOutlinedTextField(frame: CGRect(x: 0, y: 0, width: 150, height: 20))
         tf.placeholder = "$"
         tf.translatesAutoresizingMaskIntoConstraints = false
         tf.label.text = "Strike Price"
@@ -99,12 +101,13 @@ public class CalculateViewModel{
         let label = UILabel()
         label.font = UIFont(name: "AvenirNext-DemiBold", size: 24)
         label.numberOfLines = 0
+        label.text = "Black Scholes \n calculator"
         label.textAlignment = .center
         return label
     }()
     
     let riskInput: MDCOutlinedTextField = {
-        let tf = MDCOutlinedTextField(frame: CGRect(x: 0, y: 0, width: 200, height: 20))
+        let tf = MDCOutlinedTextField(frame: CGRect(x: 0, y: 0, width: 150, height: 20))
         tf.placeholder = "%"
         tf.translatesAutoresizingMaskIntoConstraints = false
         tf.label.text = "Risk-Free Interest Rate"
@@ -121,6 +124,23 @@ public class CalculateViewModel{
         return tf
     }()
     
+    let dividendInput: MDCOutlinedTextField = {
+        let tf = MDCOutlinedTextField(frame: CGRect(x: 0, y: 0, width: 150, height: 20))
+        tf.placeholder = "0%"
+        tf.translatesAutoresizingMaskIntoConstraints = false
+        tf.label.text = "Dividend-Yield Rate"
+        tf.font = UIFont(name: "AvenirNext-Medium", size: 14)
+        tf.setFloatingLabelColor(highlightedColor, for: .editing)
+        tf.setOutlineColor(highlightedColor, for: .editing)
+        tf.sizeToFit()
+        tf.doneAccessory = true
+        tf.keyboardType = .asciiCapableNumberPad
+        tf.addDoneButtonOnKeyboard()
+        tf.preferredContainerHeight = 20
+        tf.verticalDensity = 2
+        tf.textAlignment = .right
+        return tf
+    }()
   
    
 

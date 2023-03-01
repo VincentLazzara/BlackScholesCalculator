@@ -10,16 +10,6 @@ import MaterialComponents.MaterialTextControls_OutlinedTextAreas
 import MaterialComponents.MaterialTextControls_OutlinedTextFields
 
 
-/*
- TODO:
- -Input mask % for text field
- -Add remaining textfields
- -Add API name configuration
- -Make API call to fetch current price
- 
- */
-
-
 class CalculateViewController: UIViewController{
     
     //MARK: Properties
@@ -34,6 +24,7 @@ class CalculateViewController: UIViewController{
     var termInput = MDCOutlinedTextField()
     var strikeInput = MDCOutlinedTextField()
     var riskInput = MDCOutlinedTextField()
+    var dividendInput = MDCOutlinedTextField()
     
     let testView = UIView()
     var callButton = UIButton()
@@ -48,7 +39,6 @@ class CalculateViewController: UIViewController{
         didSet{
             stockInfo.stockTickerLabel.text = "\(companyInfo?.symbol ?? "GME")"
             stockInfo.stockInfoLabel.text = "\(companyInfo?.type ?? "Stock") \(companyInfo?.currency ?? "USD")"
-            titleLabel.text = "Black-ScholesCalculation \n for \(companyInfo?.name ?? "Black Scholes \n calculator")"
             
         }
     }
@@ -64,7 +54,7 @@ class CalculateViewController: UIViewController{
     }
     var riskRate = 0.00
     var time = 0.00
-   
+    var divided = 0.00
     
     //MARK: Lifecycle
     
@@ -88,10 +78,12 @@ class CalculateViewController: UIViewController{
         self.putButton = viewModel.putButton
         self.errorLabel = viewModel.errorLabel
         self.calculateButton = viewModel.calculateButton
-     
+        self.dividendInput = viewModel.dividendInput
+        
         
         view.addSubview(titleLabel)
-        titleLabel.centerX(inView: view, topAnchor: view.topAnchor, paddingTop: 100)
+        titleLabel.centerX(inView: view, topAnchor: view.topAnchor, paddingTop: 80)
+        titleLabel.text = "Black-Scholes Calculation \n for \(companyInfo?.name ?? "Black Scholes \n calculator")"
         
         view.addSubview(testView)
         testView.setDimensions(width: 200, height: 2)
@@ -111,22 +103,28 @@ class CalculateViewController: UIViewController{
         stockInfo.anchor(left: view.leftAnchor, right: view.rightAnchor)
         stockInfo.isUserInteractionEnabled = true
         
-        view.addSubview(volatilityInput)
-        volatilityInput.centerX(inView: view, topAnchor: stockInfo.bottomAnchor, paddingTop: 20)
-        volatilityInput.delegate = self
-        
-        view.addSubview(termInput)
-        termInput.centerX(inView: view, topAnchor: volatilityInput.bottomAnchor, paddingTop: 15)
-        termInput.delegate = self
-        
         view.addSubview(strikeInput)
-        strikeInput.centerX(inView: view, topAnchor: termInput.bottomAnchor, paddingTop: 15)
+        strikeInput.anchor(top: stockInfo.bottomAnchor, left: view.leftAnchor, paddingTop: 25, paddingLeft: 10)
         strikeInput.delegate = self
         
         
+        view.addSubview(termInput)
+        termInput.centerX(inView: strikeInput, topAnchor: strikeInput.bottomAnchor, paddingTop: 15)
+        termInput.delegate = self
+        
         view.addSubview(riskInput)
-        riskInput.centerX(inView: view, topAnchor: strikeInput.bottomAnchor, paddingTop: 15)
+        riskInput.centerX(inView: termInput, topAnchor: termInput.bottomAnchor, paddingTop: 15)
         riskInput.delegate = self
+        
+        
+        view.addSubview(volatilityInput)
+        volatilityInput.anchor(top: stockInfo.bottomAnchor, right: view.rightAnchor, paddingTop: 25, paddingRight: 10)
+        volatilityInput.delegate = self
+        
+        view.addSubview(dividendInput)
+        dividendInput.centerX(inView: volatilityInput, topAnchor: volatilityInput.bottomAnchor, paddingTop: 15)
+        dividendInput.delegate = self
+        
         
         view.addSubview(errorLabel)
         errorLabel.centerX(inView: view, topAnchor: riskInput.bottomAnchor, paddingTop: 20)
@@ -179,35 +177,37 @@ class CalculateViewController: UIViewController{
         let isSearchFieldsPopulated = searchIfFieldsEmpty()
     
         if isSearchFieldsPopulated {
-            self.volatility = stringToDouble(string: volatilityInput.text ?? "1.00")
+            self.volatility = stringToDouble(string: volatilityInput.text ?? "1.00") / 100
             self.time = stringToDouble(string: termInput.text ?? "1.00")
             self.strikePrice = stringToDouble(string: strikeInput.text ?? "1.00")
-            self.riskRate = stringToDouble(string: riskInput.text ?? "1.00")
+            self.riskRate = stringToDouble(string: riskInput.text ?? "1.00") / 100
+            self.divided = stringToDouble(string: dividendInput.text ?? "0.00") / 100
             
-            /*print(blackScholesOptionPrice(stockPrice: self.stockPrice ?? 1.00,
-                                          strikePrice: self.strikePrice,
-                                          riskFreeRate: self.riskRate,
-                                          volatility: self.volatility,
-                                          timeToExpiration: self.time,
-                                          isCall: self.isCall))
-            
-            print(blackScholesOptionPrice(stockPrice: 40,
-                                          strikePrice: 45,
-                                          riskFreeRate: 0.05,
-                                          volatility: 0.25,
-                                          timeToExpiration: 1,
-                                          isCall: false))*/
+            let schole = Scholes(strike: strikePrice, stock: stockPrice ?? 0.00,
+                                 risk: riskRate, time: time, volatility: volatility, dividend: divided,
+                                 ticker: companyInfo?.symbol ?? "GME", name: companyInfo?.name ?? "Company", isCall: isCall)
 
+            
+            let nav = ResultViewController()
+            nav.schole = schole
+            if isCall{
+                nav.isCallString = "Call"
+            } else {
+                nav.isCallString = "Put"
+            }
+            self.present(nav, animated: true)
             
         } else {
             return
-        }
+      }
     }
     
     func stringToDouble(string: String) -> Double{
         let text = string.replacingOccurrences(of: "[^0-9.]", with: "", options: .regularExpression)
         return Double(text)!
     }
+    
+  
     
     
     //If the stock price isn't updated or correct, this allows the user to edit the price themselves
@@ -266,13 +266,13 @@ extension CalculateViewController: UISearchTextFieldDelegate{
             if string.isEmpty { // this means that backspace is pressed
                 let oldDigits = textField.text?.digits
                 // drops one digit every time backspace is pressed
-                let newNumber = Int(oldDigits?.dropLast() ?? "0")
-                textField.text = viewModel.termFormatter.string(for: (newNumber ?? 0))
+                let newNumber = Double(oldDigits?.dropLast() ?? "0")
+                textField.text = viewModel.termFormatter.string(for: (newNumber ?? 0) / 100)
             }else // something has been entered
-            if let newNumber = Int(
+            if let newNumber = Double(
                 (oldText as NSString).replacingCharacters(in: range, with: string).digits
             ) {
-                textField.text = viewModel.termFormatter.string(for: newNumber)
+                textField.text = viewModel.termFormatter.string(for: newNumber / 100)
             }
             return false
         } else if textField == strikeInput{
@@ -302,6 +302,21 @@ extension CalculateViewController: UISearchTextFieldDelegate{
                 textField.text = viewModel.percentFormatter.string(for: newNumber / 10000)
             }
             return false
+        } else if textField == dividendInput{
+            if string.isEmpty { // this means that backspace is pressed
+                let oldDigits = textField.text?.digits
+                // drops one digit every time backspace is pressed
+                let newNumber = Double(oldDigits?.dropLast() ?? "0.0")
+                textField.text = viewModel.percentFormatter.string(for: (newNumber ?? 0) / 10000)
+            } else // something has been entered
+            if let newNumber = Double(
+                (oldText as NSString).replacingCharacters(in: range, with: string).digits
+            ) {
+                textField.text = viewModel.percentFormatter.string(for: newNumber / 10000)
+            }
+            return false
+            
+            
         }
         
         return false
@@ -331,6 +346,10 @@ extension CalculateViewController{
             errorLabel.text = "Enter the risk-free rate"
             errorLabel.isHidden = false
             return false
+        }else if dividendInput.text == ""{
+            errorLabel.text = "Enter the dividend rate"
+            errorLabel.isHidden = false
+            return false
         }else {
             errorLabel.isHidden = true
             return true
@@ -344,6 +363,7 @@ extension CalculateViewController{
     
     
 }
+
 
 
 
