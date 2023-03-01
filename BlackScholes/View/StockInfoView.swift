@@ -66,10 +66,10 @@ class StockInfoView: UIView{
         stockInfoLabel.centerY(inView: stockTickerLabel, leftAnchor: stockTickerLabel.rightAnchor, paddingLeft: 10)
         
         addSubview(currentValueLabel)
-        currentValueLabel.anchor(top: stockTickerLabel.bottomAnchor, left: self.leftAnchor, paddingTop: 10, paddingLeft: 15)
+        currentValueLabel.anchor(top: stockTickerLabel.bottomAnchor, left: self.leftAnchor, paddingTop: 7, paddingLeft: 15)
         
         addSubview(currentValueNumberLabel)
-        currentValueNumberLabel.anchor(top: currentValueLabel.bottomAnchor, left: self.leftAnchor, paddingTop: 10, paddingLeft: 15)
+        currentValueNumberLabel.anchor(top: currentValueLabel.bottomAnchor, left: self.leftAnchor, paddingTop: 7, paddingLeft: 15)
         
     }
     

@@ -1,5 +1,4 @@
 PODS:
-  - FormTextField (3.1.0)
   - Loaf (0.7.0)
   - MaterialComponents/AnimationTiming (124.2.0)
   - MaterialComponents/Availability (124.2.0)
@@ -42,7 +41,6 @@ PODS:
   - MDFInternationalization (3.0.0)
 
 DEPENDENCIES:
-  - FormTextField
   - Loaf
   - "MaterialComponents/TextControls+OutlinedTextAreas"
   - "MaterialComponents/TextControls+OutlinedTextFields"
@@ -50,19 +48,17 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - FormTextField
     - Loaf
     - MaterialComponents
     - MBProgressHUD
     - MDFInternationalization
 
 SPEC CHECKSUMS:
-  FormTextField: 229e496b8dae002c5062ea5e961e2140528782e2
   Loaf: d69937cd00649f3fa260beb8b7aef0a1feb861ef
   MaterialComponents: 1a9b2d9d45b1601ae544de85089adc4c464306d4
   MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
   MDFInternationalization: d697c55307816222a55685c4ccb1044ffb030c12
 
-PODFILE CHECKSUM: ac6a89d71dfb1bc831bccd3ffa16cc60d6eb7340
+PODFILE CHECKSUM: 5b6b8569589eedd0c7dbe03023adc61773b16c28
 
 COCOAPODS: 1.11.2

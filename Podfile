@@ -9,5 +9,6 @@ target 'BlackScholes' do
 
 	pod 'MBProgressHUD'
 	pod 'Loaf'
-
+  pod 'MaterialComponents/TextControls+OutlinedTextAreas'
+  pod 'MaterialComponents/TextControls+OutlinedTextFields'
 end

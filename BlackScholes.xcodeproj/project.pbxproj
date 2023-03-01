@@ -23,6 +23,8 @@
 		A4DC891429AD75DA004309EF /* CalculateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DC891329AD75DA004309EF /* CalculateViewController.swift */; };
 		A4DC891629AD76B3004309EF /* CalculateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DC891529AD76B3004309EF /* CalculateCell.swift */; };
 		A4DC891829AD812A004309EF /* StockInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DC891729AD812A004309EF /* StockInfoView.swift */; };
+		A4DC893829AED260004309EF /* CalculateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DC893729AED260004309EF /* CalculateViewModel.swift */; };
+		A4DC893F29AEECA3004309EF /* BlackScholesCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DC893E29AEECA3004309EF /* BlackScholesCalculator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +47,8 @@
 		A4DC891329AD75DA004309EF /* CalculateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculateViewController.swift; sourceTree = "<group>"; };
 		A4DC891529AD76B3004309EF /* CalculateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculateCell.swift; sourceTree = "<group>"; };
 		A4DC891729AD812A004309EF /* StockInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockInfoView.swift; sourceTree = "<group>"; };
+		A4DC893729AED260004309EF /* CalculateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculateViewModel.swift; sourceTree = "<group>"; };
+		A4DC893E29AEECA3004309EF /* BlackScholesCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackScholesCalculator.swift; sourceTree = "<group>"; };
 		D8822D3770AE7CD932B6833F /* Pods_BlackScholes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlackScholes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -89,6 +93,8 @@
 		A47A312229A9FD790034F3F5 /* BlackScholes */ = {
 			isa = PBXGroup;
 			children = (
+				A4DC893D29AEEC7F004309EF /* Calculation */,
+				A4DC893629AED246004309EF /* ViewModel */,
 				A47A314929AC8BFC0034F3F5 /* Protocols */,
 				A47A314429AB00830034F3F5 /* Model */,
 				A47A314129AA12E40034F3F5 /* API */,
@@ -163,6 +169,22 @@
 				A47A314A29AC8C130034F3F5 /* UIAnimateable.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		A4DC893629AED246004309EF /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				A4DC893729AED260004309EF /* CalculateViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		A4DC893D29AEEC7F004309EF /* Calculation */ = {
+			isa = PBXGroup;
+			children = (
+				A4DC893E29AEECA3004309EF /* BlackScholesCalculator.swift */,
+			);
+			path = Calculation;
 			sourceTree = "<group>";
 		};
 		EF619902619E1A41B83EB102 /* Pods */ = {
@@ -296,6 +318,8 @@
 				A47A314829AC7AA80034F3F5 /* SearchPlaceholderView.swift in Sources */,
 				A4DC891429AD75DA004309EF /* CalculateViewController.swift in Sources */,
 				A47A312429A9FD790034F3F5 /* AppDelegate.swift in Sources */,
+				A4DC893F29AEECA3004309EF /* BlackScholesCalculator.swift in Sources */,
+				A4DC893829AED260004309EF /* CalculateViewModel.swift in Sources */,
 				A47A313C29AA0B8C0034F3F5 /* StockCell.swift in Sources */,
 				A47A314B29AC8C130034F3F5 /* UIAnimateable.swift in Sources */,
 				A47A314629AB00920034F3F5 /* SearchResults.swift in Sources */,

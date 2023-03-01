@@ -173,3 +173,54 @@ struct ProgressDialog {
         }
     }
 }
+
+extension String {
+    var digits: String {
+        filter { "0"..."9" ~= $0 }
+    }
+}
+extension UITextField{
+    @IBInspectable var doneAccessory: Bool{
+        get{
+            return self.doneAccessory
+        }
+        set (hasDone) {
+            if hasDone{
+                addDoneButtonOnKeyboard()
+            }
+        }
+    }
+
+    func addDoneButtonOnKeyboard()
+    {
+        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50))
+        doneToolbar.barStyle = .default
+
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let done: UIBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(self.doneButtonAction))
+
+        let items = [flexSpace, done]
+        doneToolbar.items = items
+        doneToolbar.sizeToFit()
+
+        self.inputAccessoryView = doneToolbar
+    }
+
+    @objc func doneButtonAction()
+    {
+        self.resignFirstResponder()
+    }
+}
+
+
+public let highlightedColor = UIColor(hue: 0.4611, saturation: 1, brightness: 0.75, alpha: 1.0)
+
+extension UIColor {
+    func darker(by percentage: CGFloat) -> UIColor? {
+        var h: CGFloat = 0, s: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
+        if getHue(&h, saturation: &s, brightness: &b, alpha: &a) {
+            return UIColor(hue: h, saturation: s, brightness: max(b - percentage/100, 0), alpha: a)
+        }
+        return nil
+    }
+}
