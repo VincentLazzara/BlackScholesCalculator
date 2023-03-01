@@ -44,10 +44,24 @@ class CalculateViewController: UIViewController{
     
     //Computation Properties
     
+    var companyInfo: SearchResult?{
+        didSet{
+            stockInfo.stockTickerLabel.text = "\(companyInfo?.symbol ?? "GME")"
+            stockInfo.stockInfoLabel.text = "\(companyInfo?.type ?? "Stock") \(companyInfo?.currency ?? "USD")"
+            titleLabel.text = "Black-ScholesCalculation \n for \(companyInfo?.name ?? "Black Scholes \n calculator")"
+            
+        }
+    }
+    
+    
     var isCall = true
     var volatility = 0.00
     var strikePrice = 0.00
-    var stockPrice = 0.00
+    var stockPrice: Double?{
+        didSet{
+            stockInfo.currentValueNumberLabel.text = "\(stockPrice ?? 0.0)"
+        }
+    }
     var riskRate = 0.00
     var time = 0.00
    
@@ -74,6 +88,7 @@ class CalculateViewController: UIViewController{
         self.putButton = viewModel.putButton
         self.errorLabel = viewModel.errorLabel
         self.calculateButton = viewModel.calculateButton
+     
         
         view.addSubview(titleLabel)
         titleLabel.centerX(inView: view, topAnchor: view.topAnchor, paddingTop: 100)
@@ -94,9 +109,10 @@ class CalculateViewController: UIViewController{
         stockInfo.centerX(inView: view, topAnchor: putButton.bottomAnchor, paddingTop: 15)
         stockInfo.anchor(height: 80)
         stockInfo.anchor(left: view.leftAnchor, right: view.rightAnchor)
+        stockInfo.isUserInteractionEnabled = true
         
         view.addSubview(volatilityInput)
-        volatilityInput.centerX(inView: view, topAnchor: stockInfo.bottomAnchor, paddingTop: 15)
+        volatilityInput.centerX(inView: view, topAnchor: stockInfo.bottomAnchor, paddingTop: 20)
         volatilityInput.delegate = self
         
         view.addSubview(termInput)
@@ -119,6 +135,10 @@ class CalculateViewController: UIViewController{
         view.addSubview(calculateButton)
         calculateButton.centerX(inView: view, topAnchor: errorLabel.bottomAnchor, paddingTop: 5)
         calculateButton.addTarget(self, action: #selector(calculateButtonTouched), for: .touchUpInside)
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(editPriceTapped))
+        stockInfo.editView.addGestureRecognizer(tapGestureRecognizer)
+            
     
     }
 
@@ -157,15 +177,60 @@ class CalculateViewController: UIViewController{
                })
            }
         let isSearchFieldsPopulated = searchIfFieldsEmpty()
-       
-        if isSearchFieldsPopulated{
-            print("Can continue")
+    
+        if isSearchFieldsPopulated {
+            self.volatility = stringToDouble(string: volatilityInput.text ?? "1.00")
+            self.time = stringToDouble(string: termInput.text ?? "1.00")
+            self.strikePrice = stringToDouble(string: strikeInput.text ?? "1.00")
+            self.riskRate = stringToDouble(string: riskInput.text ?? "1.00")
+            
+            /*print(blackScholesOptionPrice(stockPrice: self.stockPrice ?? 1.00,
+                                          strikePrice: self.strikePrice,
+                                          riskFreeRate: self.riskRate,
+                                          volatility: self.volatility,
+                                          timeToExpiration: self.time,
+                                          isCall: self.isCall))
+            
+            print(blackScholesOptionPrice(stockPrice: 40,
+                                          strikePrice: 45,
+                                          riskFreeRate: 0.05,
+                                          volatility: 0.25,
+                                          timeToExpiration: 1,
+                                          isCall: false))*/
+
+            
         } else {
             return
         }
-       
     }
     
+    func stringToDouble(string: String) -> Double{
+        let text = string.replacingOccurrences(of: "[^0-9.]", with: "", options: .regularExpression)
+        return Double(text)!
+    }
+    
+    
+    //If the stock price isn't updated or correct, this allows the user to edit the price themselves
+    @objc private func editPriceTapped(){
+
+        var textField = UITextField()
+        
+        let alert = UIAlertController(title: "Edit \(companyInfo?.symbol ?? "GME")'s stock price", message: "", preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "Change Price", style: .default) { (action) in
+            //User clicks add item button
+            self.stockPrice = Double(textField.text ?? "0.00")
+        }
+        
+        alert.addTextField { (alertTextField) in
+            alertTextField.placeholder = "$5.87"
+            alertTextField.keyboardType = UIKeyboardType.decimalPad
+            textField = alertTextField
+        }
+                           
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
+    }
     
 }
 

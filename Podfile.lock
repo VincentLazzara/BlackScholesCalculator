@@ -39,12 +39,14 @@ PODS:
     - "MaterialComponents/TextControls+BaseTextFields"
   - MBProgressHUD (1.2.0)
   - MDFInternationalization (3.0.0)
+  - SigmaSwiftStatistics (9.0.2)
 
 DEPENDENCIES:
   - Loaf
   - "MaterialComponents/TextControls+OutlinedTextAreas"
   - "MaterialComponents/TextControls+OutlinedTextFields"
   - MBProgressHUD
+  - SigmaSwiftStatistics (~> 9.0)
 
 SPEC REPOS:
   trunk:
@@ -52,13 +54,15 @@ SPEC REPOS:
     - MaterialComponents
     - MBProgressHUD
     - MDFInternationalization
+    - SigmaSwiftStatistics
 
 SPEC CHECKSUMS:
   Loaf: d69937cd00649f3fa260beb8b7aef0a1feb861ef
   MaterialComponents: 1a9b2d9d45b1601ae544de85089adc4c464306d4
   MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
   MDFInternationalization: d697c55307816222a55685c4ccb1044ffb030c12
+  SigmaSwiftStatistics: 4ec81cd50b0f397baddba05fe88ce228a66edd8c
 
-PODFILE CHECKSUM: 5b6b8569589eedd0c7dbe03023adc61773b16c28
+PODFILE CHECKSUM: dd236b005d665093913b683f34e140f56bf713f5
 
 COCOAPODS: 1.11.2

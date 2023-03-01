@@ -44,6 +44,13 @@ class StockInfoView: UIView{
         return label
     }()
     
+    var editView: UIImageView  = {
+           let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 24, height: 24))
+           imageView.image = UIImage(named: "edit-246-64")
+           imageView.isUserInteractionEnabled = true
+           return imageView
+       }()
+    
     
     
     //MARK: Lifecycle
@@ -70,6 +77,10 @@ class StockInfoView: UIView{
         
         addSubview(currentValueNumberLabel)
         currentValueNumberLabel.anchor(top: currentValueLabel.bottomAnchor, left: self.leftAnchor, paddingTop: 7, paddingLeft: 15)
+        
+        addSubview(editView)
+        editView.setDimensions(width: 24, height: 24)
+        editView.anchor(top: currentValueLabel.bottomAnchor, left: currentValueNumberLabel.rightAnchor, paddingLeft: 10)
         
     }
     

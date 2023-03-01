@@ -10,7 +10,7 @@ import Foundation
 
 struct SearchResults: Decodable {
     
-    let items: [SearchResult]
+    var items: [SearchResult]
     
     enum CodingKeys: String, CodingKey{
         case items = "bestMatches"

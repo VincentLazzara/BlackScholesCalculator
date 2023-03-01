@@ -56,6 +56,10 @@ class SearchViewController: UITableViewController, UIAnimateable {
     
     @Published private var mode: Mode = .onboarding
     
+    var latestStockPriceSelection: Double?
+    var latestStockSelection: SearchResult?
+    
+    
     
     //MARK: Lifecycle
     
@@ -82,6 +86,7 @@ class SearchViewController: UITableViewController, UIAnimateable {
         $searchQuery
             .debounce(for: .milliseconds(750), scheduler: RunLoop.main)
             .sink { [unowned self] (searchQuery) in
+                guard !searchQuery.isEmpty else {return}
                 showLoadingAnimation()
                 //.sink used to handle potential errors (completion) and success (value)
                 apiService.fetchSymbolsPublisher(keywords: searchQuery).sink { (completion) in
@@ -91,6 +96,7 @@ class SearchViewController: UITableViewController, UIAnimateable {
                     case .finished: break
                     }
                 } receiveValue: { (searchResults) in
+                    //self.SearchResults?.items.removeAll()
                     self.SearchResults = searchResults
                 //This creates the publisher, not the subscriber
                 }.store(in: &self.subscribers)
@@ -103,6 +109,8 @@ class SearchViewController: UITableViewController, UIAnimateable {
             switch mode{
             case .onboarding:
                 self.tableView.backgroundView = SearchPlaceholderView()
+                self.SearchResults?.items.removeAll()
+                self.tableView.reloadData()
             case .search: self.tableView.backgroundView = nil
             }
         }.store(in: &self.subscribers)
@@ -135,13 +143,38 @@ class SearchViewController: UITableViewController, UIAnimateable {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.tableView.deselectRow(at: indexPath, animated: true)
         
-        self.performSegue(withIdentifier: "showCalculator", sender: nil)
+        if let searchResults = self.SearchResults{
+            let symbol = searchResults.items[indexPath.item].symbol
+            latestStockSelection = searchResults.items[indexPath.item]
+            handleSelection(for: symbol)
+        }
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showCalculator"{
             let destination = segue.destination as? CalculateViewController
+            destination?.companyInfo = latestStockSelection
+            destination?.stockPrice = latestStockPriceSelection ?? 0.00
         }
+    }
+    
+    private func handleSelection(for symbol: String){
+        showLoadingAnimation()
+        apiService.fetchStockPrice(keywords: symbol).sink { (completionResult) in
+            switch completionResult{
+            case .failure(let error): print(error.localizedDescription)
+            case .finished: break
+            }
+        } receiveValue: { (timeSeriesDailyAdjusted) in
+            self.hideLoadingAnimation()
+            self.latestStockPriceSelection = timeSeriesDailyAdjusted.getIntraInfo()[0].adjustedClose
+            self.performSegue(withIdentifier: "showCalculator", sender: nil)
+        }.store(in: &subscribers)
+
+        
+        
+        
     }
     
     
@@ -162,6 +195,8 @@ extension SearchViewController: UISearchResultsUpdating, UISearchControllerDeleg
     }
     
     func didDismissSearchController(_ searchController: UISearchController) {
+        self.SearchResults?.items.removeAll()
+        self.tableView.reloadData()
         mode = .onboarding
     }
    

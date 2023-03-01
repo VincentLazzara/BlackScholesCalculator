@@ -25,6 +25,7 @@
 		A4DC891829AD812A004309EF /* StockInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DC891729AD812A004309EF /* StockInfoView.swift */; };
 		A4DC893829AED260004309EF /* CalculateViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DC893729AED260004309EF /* CalculateViewModel.swift */; };
 		A4DC893F29AEECA3004309EF /* BlackScholesCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DC893E29AEECA3004309EF /* BlackScholesCalculator.swift */; };
+		A4DC894129AEF372004309EF /* DailyTimeSeriesAdjusted.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DC894029AEF372004309EF /* DailyTimeSeriesAdjusted.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +50,7 @@
 		A4DC891729AD812A004309EF /* StockInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockInfoView.swift; sourceTree = "<group>"; };
 		A4DC893729AED260004309EF /* CalculateViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculateViewModel.swift; sourceTree = "<group>"; };
 		A4DC893E29AEECA3004309EF /* BlackScholesCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackScholesCalculator.swift; sourceTree = "<group>"; };
+		A4DC894029AEF372004309EF /* DailyTimeSeriesAdjusted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyTimeSeriesAdjusted.swift; sourceTree = "<group>"; };
 		D8822D3770AE7CD932B6833F /* Pods_BlackScholes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlackScholes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -159,6 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				A47A314529AB00920034F3F5 /* SearchResults.swift */,
+				A4DC894029AEF372004309EF /* DailyTimeSeriesAdjusted.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -313,6 +316,7 @@
 			files = (
 				A47A314029AA0C1E0034F3F5 /* Extensions.swift in Sources */,
 				A4DC891829AD812A004309EF /* StockInfoView.swift in Sources */,
+				A4DC894129AEF372004309EF /* DailyTimeSeriesAdjusted.swift in Sources */,
 				A47A313829AA037A0034F3F5 /* SearchViewController.swift in Sources */,
 				A4DC891629AD76B3004309EF /* CalculateCell.swift in Sources */,
 				A47A314829AC7AA80034F3F5 /* SearchPlaceholderView.swift in Sources */,
@@ -400,7 +404,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -454,7 +458,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

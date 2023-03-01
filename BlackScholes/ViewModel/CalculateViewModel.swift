@@ -98,7 +98,6 @@ public class CalculateViewModel{
     var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont(name: "AvenirNext-DemiBold", size: 24)
-        label.text = "Black-ScholesCalculation \n for Stock Name"
         label.numberOfLines = 0
         label.textAlignment = .center
         return label
@@ -134,6 +133,7 @@ public class CalculateViewModel{
         button.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMinXMinYCorner]
         button.titleLabel?.font =  UIFont(name: "AvenirNext-Medium", size: 18)
         button.backgroundColor = highlightedColor
+        button.isUserInteractionEnabled = true
         button.setTitleColor(.white, for: .normal)
         return button
     }()
@@ -147,6 +147,7 @@ public class CalculateViewModel{
         button.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner]
         button.titleLabel?.font =  UIFont(name: "AvenirNext-Medium", size: 18)
         button.backgroundColor = .lightGray
+        button.isUserInteractionEnabled = true
         button.setTitleColor(.white, for: .normal)
         return button
     }()

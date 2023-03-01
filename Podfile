@@ -11,4 +11,5 @@ target 'BlackScholes' do
 	pod 'Loaf'
   pod 'MaterialComponents/TextControls+OutlinedTextAreas'
   pod 'MaterialComponents/TextControls+OutlinedTextFields'
+  pod 'SigmaSwiftStatistics', '~> 9.0'
 end
