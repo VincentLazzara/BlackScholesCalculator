@@ -20,7 +20,7 @@ class SearchPlaceholderView: UIView{
     
     private let title: UILabel = {
         let label = UILabel()
-        label.text = "Choose a stock to run a \n Black-Scholes analysis on."
+        label.text = "Choose a stock to run a \n Black-Scholes analysis on"
         label.font = UIFont(name: "AvenirNext-Medium", size: 16)!
         label.numberOfLines = 2
         label.textAlignment = .center

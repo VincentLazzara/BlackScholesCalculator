@@ -58,7 +58,7 @@ class SearchViewController: UITableViewController, UIAnimateable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        configureTableView()
         configure()
         observeForm()
     }
@@ -88,6 +88,7 @@ class SearchViewController: UITableViewController, UIAnimateable {
                     }
                 } receiveValue: { (searchResults) in
                     //self.SearchResults?.items.removeAll()
+                    self.tableView.isScrollEnabled = true
                     self.SearchResults = searchResults
                 //This creates the publisher, not the subscriber
                 }.store(in: &self.subscribers)
@@ -139,6 +140,11 @@ class SearchViewController: UITableViewController, UIAnimateable {
             handleSelection(for: symbol)
         }
         
+    }
+    
+    func configureTableView(){
+        tableView.tableFooterView = UIView()
+        tableView.isScrollEnabled = false
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -197,6 +203,7 @@ extension SearchViewController: UISearchResultsUpdating, UISearchControllerDeleg
     func clearTableView(){
         self.SearchResults?.items.removeAll()
         self.tableView.reloadData()
+        self.tableView.isScrollEnabled = false
     }
    
 }
